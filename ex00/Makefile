@@ -5,9 +5,9 @@ SRC_DIR = .
 OBJ_DIR = obj
 INC_DIR = -I.
 
-SRC = $(wildcard *.cpp)
-OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-INC = $(wildcard *.hpp) $(wildcard *.h)
+SRC = $(wildcard $(SRC_DIR)/*.cpp)
+OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+INC = $(wildcard $(INC_DIR)/*.hpp) $(wildcard $(INC_DIR)/*.h)
 EXE = ex00
 
 all: $(EXE)
@@ -15,8 +15,8 @@ all: $(EXE)
 $(EXE): $(OBJ)
 	$(CC) $(CFLAGS) $(INC_DIR) $(OBJ) -o $(EXE)
 
-%.o: %.cpp $(INC)
-	mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INC)
+	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
 
 valgrind: $(EXE)
@@ -29,3 +29,5 @@ fclean: clean
 	rm -f $(EXE)
 
 re: fclean all
+
+.PHONY: all valgrind clean fclean re
