@@ -21,10 +21,13 @@ class Fixed
 	private:
 		static const int	_num_frac_bits = 8;
 		int					_fix_point_value;
+		
 	public:
 		Fixed();
 		Fixed(const Fixed &other);
 		~Fixed();
+		Fixed	&operator = (const Fixed &other);
+
 		int		getRawBits(void) const;
 		void	setRawBits(const int raw);
 };
