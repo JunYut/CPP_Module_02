@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:46:10 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/11/16 23:44:05 by we               ###   ########.fr       */
+/*   Updated: 2024/11/18 08:20:12 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ using std::endl;
 Fixed::Fixed()
 {
 	cout << "Default constructor called" << endl;
-	_fix_point_value = 0;
+	_raw_bits = 0;
 }
 
 Fixed::Fixed(const Fixed &other)
@@ -44,10 +44,10 @@ Fixed &Fixed::operator = (const Fixed &other)
 int	Fixed::getRawBits(void) const
 {
 	cout << "getRawBits member function called" << endl;
-	return (_fix_point_value);
+	return (_raw_bits);
 }
 
 void	Fixed::setRawBits(const int raw)
 {
-	_fix_point_value = raw;
+	_raw_bits = raw;
 }
