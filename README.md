@@ -1,79 +1,107 @@
 # Operator Overloading
-Allows custom behavior for operator when they are used with user-defined types (such as classes). This can make user-defined types more intuitive to use and integrate seamlessly with standard C++ syntax.
+## Unary Operators
+### Prefix Increment & Prefix Decrement Operators
+`Member Function`: takes `no` arguments \
+`Return`: a reference to the object to allow for chaining
+- `++i`
+- `--i`
 
-## Member Function
-For operators that modify the left-hand operand(like `=`), you typically implement as member functions.
+### Postfix Increment & Postfix Decrement Operators
+`Member Function`: takes `1` argument \
+`Return`: a copy of the object before modification
+- `i++`
+- `i--`
 
-### `=`
+## Binary Operators
+### Arithmetic Operators
+`Member Function`: takes `1` argument \
+`Return`: typically a new object that is the result of the operation 
+- `+`
+- `-`
+- `*`
+- `/`
+- `%`
 
-#### Implementation:
+### Relational Operators
+`Member Function`: takes `1` argument \
+`Return`: typically a boolean value indicating the result of the comparison 
+- `==`
+- `!=`
+- `<`
+- `>`
+- `<=`
+- `>=`
+
+### Assignment Operators
+`Member Function`: takes `1` argument \
+`Return`: typically a reference to the left operand to allow for chained assignments
+- `=`
+- `+=`
+- `-=`
+- `*=`
+- `/=`
+- `%=`
+
+## Special Operators
+### Subscript Operator
+- `[]`
+
+`Member Function`: takes `1` argument \
+`Return`: a reference to the element at the specified index
+
+### Function Call Operator
+- `()`
+
+`Member Function`: takes a `variable number` of arguments \
+`Return`: the result of the function call
+
+### Stream Insertion & Extraction Operators
+`Non-Member Functions *`: takes `2` arguments
+
+- `<<` \
+`Return`: a reference to the output stream to allow for chaining
+
+- `>>` \
+`Return`: a reference to the input stream to allow for chaining
+
+## Chaining
+Chaining works by ensuring that the overloaded operators return a reference to
+an object that allows subsequent operations to be applied to the same object 
+or stream. This is commonly used with assignment operators, arithmetic operators, and stream insertion/extraction operators.
+
+### Assignment Operators
 ```
-Class &operator = (const Class &other)
-{
-	if (this != &other)
-		member = other.member;
-	return (*this);
-}
+a = b = c;
 ```
+1. The expression is evaluated from right to left
+2. `b = c` is evaluated. `=` returns a reference to `b`
+3. `a = b` is evaluated. `=` returns a reference to `a`
 
-#### Usage:
+### Stream Insertion Operators
 ```
-obj1 = obj2
+cout << a << b << c;
 ```
+1. The expression is evaluated rom left to right
+2. `cout << a` is evaluated. `<<` returns a reference to `cout`
+3. `cout << b` is evaluated. `<<` returns a reference to `cout`
+4. `cout << c` is evaluated. `<<` returns a reference to `cout`
 
-**left-hand operand**: `Class & = obj1`
-**right-hand operand**: `const Class &other = obj2`
-
-## Non-member Function
-For operators where the left-hand operand is not an instance of the class (like `<<`), you typically implement them as non-member functions, often as friend functions.
-
-### `<<`
-The `<<` operator in C++ is known as the stream insertion operator. It is primarily used for output operations, particularly with the `ostream` class, which includes `std::cout`. This operator allows you to send data to an output stream, such as the console or a file.
-
-Common Usage:
-- `Standard Output`: The most common use of the << operator is with std::cout to print data to the console.
-- `File Output`: It can also be used with file streams (std::ofstream) to write data to files.
-
-#### Implementation:
+### Arithmetic Operators
 ```
-ostream &operator << (ostream &s, const Class &o)
-{
-	s << o.member;
-	return (s);
-}
+d = a + b + c;
 ```
+1. The expression is evaluated rom left to right
+2. `a + b` is evaluated. `+` returns a new object
+3. The reslut of `a + b` is added to `c`. `+` returns a new object
+4. The result is assigned to `d`
 
-#### Usage:
-```
-cout << object
-```
-
-**left-hand operand**: `ostream &s = cout`
-
-**right-hand operand**: `const Class &o = object`
-
-**return type**: `ostream &` - allows for chaining
-
-#### Chaining:
-```
-cout << obj1 << obj2 << obj3;
-```
-#### First Operation: cout << obj1
-The operator<< function is called with cout as the s parameter and obj1 as the o parameter.
-Inside the function, s << o.member is executed, which inserts the member of obj1 into the cout stream.
-The function then returns the cout stream (s).
-
-#### Second Operation: cout << obj1 << obj2
-The returned cout stream from the first operation is now used as the left-hand operand for the next << operation.
-The operator<< function is called again, this time with the cout stream as the s parameter and obj2 as the o parameter.
-Inside the function, s << o.member is executed, which inserts the member of obj2 into the cout stream.
-The function then returns the cout stream (s).
-
-#### Third Operation: cout << obj1 << obj2 << obj3
-The returned cout stream from the second operation is now used as the left-hand operand for the next << operation.
-The operator<< function is called again, this time with the cout stream as the s parameter and obj3 as the o parameter.
-Inside the function, s << o.member is executed, which inserts the member of obj3 into the cout stream.
-The function then returns the cout stream (s).
-
-#### Summary
-The chaining works because each call to the operator<< function returns the ostream reference (s). This allows the next << operation to use the same stream, enabling multiple insertions in a single statement. The final result is that the member of each object (obj1, obj2, obj3) is inserted into the cout stream in sequence.
+## FAQ
+### Why `<<` and `>>` are implemented as `Non-Member Function`s ?
+1. **Symmetry and Consistency** \
+The left-hand operand can be a standard stream object and the right-hand 
+object can be a user-defined type.
+2. **Access to Private Members** \
+By declaring the non-member operator functions as friends of the class, they 
+can access private and protected members of the class.
+3. **Flexibility** \
+Don't need to modify the stream classes to support new user-defined types.
