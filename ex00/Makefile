@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c++98
 
 SRC_DIR = .
 OBJ_DIR = obj
-INC_DIR = -I.
+INC_DIR = .
 
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
@@ -12,15 +12,19 @@ EXE = ex00
 
 all: $(EXE)
 
-$(EXE): $(OBJ)
-	$(CC) $(CFLAGS) $(INC_DIR) $(OBJ) -o $(EXE)
+$(EXE): $(OBJ) $(INC)
+	$(CC) $(CFLAGS) -I$(INC_DIR) $(OBJ) -o $(EXE)
+
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INC)
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 valgrind: $(EXE)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(EXE)
+
+fsan: $(EXE)
+	$(CC) $(CFLAGS) -fsanitize=address -I$(INC_DIR) $(OBJ) -o $(EXE)
 
 clean:
 	rm -rf $(OBJ_DIR)
@@ -30,4 +34,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all valgrind clean fclean re
+.PHONY: all valgrind fsan clean fclean re
