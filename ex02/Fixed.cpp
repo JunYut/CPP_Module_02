@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:46:10 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/11/21 14:31:11 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/11/28 14:59:21 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,29 +52,105 @@ Fixed &Fixed::operator = (const Fixed &other)
 	return (*this);
 }
 
+bool	Fixed::operator > (const Fixed &other) const
+{
+	return (_raw_bits > other.getRawBits());
+}
+
+bool	Fixed::operator < (const Fixed &other) const
+{
+	return (_raw_bits < other.getRawBits());
+}
+
+bool	Fixed::operator >= (const Fixed &other) const
+{
+	return (_raw_bits >= other.getRawBits());
+}
+
+bool	Fixed::operator <= (const Fixed &other) const
+{
+	return (_raw_bits <= other.getRawBits());
+}
+
+bool	Fixed::operator == (const Fixed &other) const
+{
+	return (_raw_bits == other.getRawBits());
+}
+
+bool	Fixed::operator != (const Fixed &other) const
+{
+	return (_raw_bits != other.getRawBits());
+}
+
+Fixed	Fixed::operator + (const Fixed &other) const
+{
+	return (Fixed(toFloat() + other.toFloat()));
+}
+
+Fixed	Fixed::operator - (const Fixed &other) const
+{
+	return (Fixed(toFloat() - other.toFloat()));
+}
+
+Fixed	Fixed::operator * (const Fixed &other) const
+{
+	return (Fixed(toFloat() * other.toFloat()));
+}
+
+Fixed	Fixed::operator / (const Fixed &other) const
+{
+	return (Fixed(toFloat() / other.toFloat()));
+}
+
+Fixed	&Fixed::operator ++ (void)
+{
+	_raw_bits += 1;
+	return (*this);
+}
+
+Fixed	Fixed::operator ++ (int)
+{
+	Fixed	tmp(*this);
+	++(*this);
+	return (tmp);
+}
+
+Fixed	&Fixed::operator -- (void)
+{
+	_raw_bits -= 1;
+	return (*this);
+}
+
+Fixed	Fixed::operator -- (int)
+{
+	Fixed	tmp(*this);
+	--(*this);
+	return (tmp);
+}
+
 Fixed	&Fixed::min(Fixed &a, Fixed &b)
 {
-	return (a.getRawBits() < b.getRawBits() ? a : b);
+	return (a < b ? a : b);
 }
 
 Fixed	&Fixed::max(Fixed &a, Fixed &b)
 {
-	return (a.getRawBits() > b.getRawBits() ? a : b);
+	return (a > b ? a : b);
 }
 
 const Fixed	&Fixed::min(const Fixed &a, const Fixed &b)
 {
-	return (a.getRawBits() < b.getRawBits() ? a : b);
+	return (a < b ? a : b);
 }
 
 const Fixed	&Fixed::max(const Fixed &a, const Fixed &b)
 {
-	return (a.getRawBits() > b.getRawBits() ? a : b);
+	return (a > b ? a : b);
 }
 
 float	Fixed::toFloat(void) const
 {
-	return ((float)_raw_bits / (float)(1 << _bits));
+	return (static_cast<float>(_raw_bits) / (1 << _bits));
 }
 
 int	Fixed::toInt(void) const

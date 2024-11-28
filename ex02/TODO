@@ -1,27 +1,27 @@
 # NOW
 ```
->
+
 ```
 
 ## Comparison Operators
-- [ ] `>`
-- [ ] `<`
-- [ ] `>=`
-- [ ] `<=`
-- [ ] `==`
-- [ ] `!=`
+- [x] `>`
+- [x] `<`
+- [x] `>=`
+- [x] `<=`
+- [x] `==`
+- [x] `!=`
 
 ## Arithmetic Operators
-- [ ] `+`
-- [ ] `-`
-- [ ] `*`
-- [ ] `/`
+- [x] `+`
+- [x] `-`
+- [x] `*`
+- [x] `/`
 
 ## Increment / Decrement Operators
-- [ ] `++i`
-- [ ] `i++`
-- [ ] `--i`
-- [ ] `i--`
+- [x] `++i`
+- [x] `i++`
+- [x] `--i`
+- [x] `i--`
 
 ## Public Overloaded Member Functions
 - [?] `static Fixed &Fixed::min(Fixed &n1, Fixed &n2)`

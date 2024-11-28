@@ -24,13 +24,30 @@ class Fixed
 		int					_raw_bits;
 
 	public:
-		Fixed();
+		Fixed(void);
 		Fixed(const Fixed &other);
 		Fixed(const int num);
 		Fixed(const float num);
-		~Fixed();
+		~Fixed(void);
 		
 		Fixed	&operator = (const Fixed &other);
+
+		bool	operator > (const Fixed &other) const;
+		bool	operator < (const Fixed &other) const;
+		bool	operator >= (const Fixed &other) const;
+		bool	operator <= (const Fixed &other) const;
+		bool	operator == (const Fixed &other) const;
+		bool	operator != (const Fixed &other) const;
+
+		Fixed	operator + (const Fixed &other) const;
+		Fixed	operator - (const Fixed &other) const;
+		Fixed	operator * (const Fixed &other) const;
+		Fixed	operator / (const Fixed &other) const;
+
+		Fixed	&operator ++ (void);
+		Fixed	operator ++ (int);
+		Fixed	&operator -- (void);
+		Fixed	operator -- (int);
 
 		static Fixed		&min(Fixed &a, Fixed &b);
 		static Fixed		&max(Fixed &a, Fixed &b);
