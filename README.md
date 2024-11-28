@@ -97,11 +97,14 @@ d = a + b + c;
 
 ## FAQ
 ### Why `<<` and `>>` are implemented as `Non-Member Function`s ?
-1. **Symmetry and Consistency** \
+1. **Chaining Different Data Types** \
+Allows chaining of multiple stream operations involving both built-in types 
+and user-defined types.
+2. **Flexibility** \
+Don't need to modify the stream classes to support new user-defined types.
+3. **Symmetry and Consistency** \
 The left-hand operand can be a standard stream object and the right-hand 
 object can be a user-defined type.
-2. **Access to Private Members** \
+4. **Access to Private Members** \
 By declaring the non-member operator functions as friends of the class, they 
 can access private and protected members of the class.
-3. **Flexibility** \
-Don't need to modify the stream classes to support new user-defined types.
