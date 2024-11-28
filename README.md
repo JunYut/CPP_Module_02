@@ -14,7 +14,7 @@
 
 ## Binary Operators
 ### Arithmetic Operators
-`Member Function`: takes `1` argument \
+`Member Function`: takes `1` argument, the `Right-hand Operand` \
 `Return`: typically a new object that is the result of the operation 
 - `+`
 - `-`
@@ -23,7 +23,7 @@
 - `%`
 
 ### Relational Operators
-`Member Function`: takes `1` argument \
+`Member Function`: takes `1` argument, the `Right-hand Operand` \
 `Return`: typically a boolean value indicating the result of the comparison 
 - `==`
 - `!=`
@@ -33,7 +33,7 @@
 - `>=`
 
 ### Assignment Operators
-`Member Function`: takes `1` argument \
+`Member Function`: takes `1` argument, the `Right-hand Operand` \
 `Return`: typically a reference to the left operand to allow for chained assignments
 - `=`
 - `+=`
@@ -46,7 +46,7 @@
 ### Subscript Operator
 - `[]`
 
-`Member Function`: takes `1` argument \
+`Member Function`: takes `1` argument, the `Right-hand Operand` \
 `Return`: a reference to the element at the specified index
 
 ### Function Call Operator
@@ -56,12 +56,18 @@
 `Return`: the result of the function call
 
 ### Stream Insertion & Extraction Operators
-`Non-Member Functions *`: takes `2` arguments
-
 - `<<` \
+
+`Non-Member Functions *`: takes `2` arguments \
+`Arg 1`: Left-hand Operand \
+`Arg 2`: Right-hand Operand \
 `Return`: a reference to the output stream to allow for chaining
 
 - `>>` \
+
+`Non-Member Functions *`: takes `2` arguments \
+`Arg 1`: Left-hand Operand \
+`Arg 2`: Right-hand Operand \
 `Return`: a reference to the input stream to allow for chaining
 
 ## Chaining
